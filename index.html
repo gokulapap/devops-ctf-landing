@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOpsCTF — Hands-on DevOps CTF & Incident Simulation</title>
+    <meta name="description" content="Debug Kubernetes clusters, Fix Cloud deployments, and Solve Real-world Infrastructure issues in isolated environments.">
+    <meta property="og:title" content="DevOpsCTF — Hands-on DevOps CTF & Incident Simulation">
+    <meta property="og:description" content="Real Infrastructure. Real Challenges. Debug Kubernetes, fix deployments, solve infra issues.">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='m7 15 3-3-3-3M13 15h4'/%3E%3C/svg%3E">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #0a0a0b;
+            --bg-card: #111113;
+            --border: #1e1e22;
+            --text: #fafafa;
+            --text-muted: #71717a;
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --green: #22c55e;
+            --red: #ef4444;
+            --yellow: #eab308;
+            --terminal-bg: #0d1117;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* ── Navbar ── */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            border-bottom: 1px solid rgba(30,30,34,0.5);
+            background: rgba(10,10,11,0.8);
+            backdrop-filter: blur(20px);
+        }
+        .navbar-inner {
+            max-width: 1200px; margin: 0 auto; padding: 0 1rem;
+            display: flex; height: 64px; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 0.5rem; }
+        .logo-icon {
+            width: 36px; height: 36px; border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-icon svg { width: 20px; height: 20px; color: white; }
+        .logo-text { font-size: 1.125rem; font-weight: 600; letter-spacing: -0.02em; }
+        .logo-text span { color: var(--primary); }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.625rem 1.5rem; border-radius: 8px; font-weight: 500;
+            font-size: 0.875rem; border: none; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-hero {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white; box-shadow: 0 0 20px rgba(99,102,241,0.3);
+        }
+        .btn-hero:hover { box-shadow: 0 0 30px rgba(99,102,241,0.5); transform: translateY(-1px); }
+        .btn-outline {
+            background: transparent; color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--text-muted); }
+        .btn-xl { padding: 0.875rem 2rem; font-size: 1rem; }
+        .btn-sm { padding: 0.5rem 1rem; font-size: 0.8rem; }
+        .btn svg { width: 18px; height: 18px; }
+
+        /* ── Hero ── */
+        .hero {
+            position: relative; min-height: 90vh; display: flex;
+            align-items: center; justify-content: center; overflow: hidden;
+        }
+        .hero-glow {
+            position: absolute; inset: 0;
+            background: radial-gradient(600px circle at 50% 30%, rgba(99,102,241,0.08), transparent 60%);
+        }
+        .hero-grid {
+            position: absolute; inset: 0; opacity: 0.03;
+            background-image: linear-gradient(var(--primary) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--primary) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+        .hero-content {
+            position: relative; z-index: 10; max-width: 900px;
+            margin: 0 auto; text-align: center; padding: 5rem 1rem 0;
+        }
+        .badge {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1rem; border-radius: 9999px;
+            background: rgba(30,30,34,0.5); border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+        .badge svg { width: 16px; height: 16px; color: var(--primary); }
+        .badge span { font-size: 0.875rem; color: var(--text-muted); }
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700;
+            letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1.5rem;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light), #c084fc);
+            -webkit-background-clip: text; background-clip: text; color: transparent;
+        }
+        .hero-sub {
+            font-size: 1.125rem; color: var(--text-muted);
+            max-width: 640px; margin: 0 auto 2.5rem;
+        }
+        .hero-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+        /* ── Terminal Preview ── */
+        .terminal { margin-top: 4rem; max-width: 680px; margin-left: auto; margin-right: auto; }
+        .terminal-window {
+            border-radius: 12px; overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); border: 1px solid var(--border);
+        }
+        .terminal-header {
+            display: flex; align-items: center; gap: 0.5rem;
+            padding: 0.75rem 1rem; background: var(--terminal-bg);
+            border-bottom: 1px solid var(--border);
+        }
+        .terminal-dots { display: flex; gap: 0.5rem; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .dot-red { background: rgba(239,68,68,0.8); }
+        .dot-yellow { background: rgba(234,179,8,0.8); }
+        .dot-green { background: rgba(34,197,94,0.8); }
+        .terminal-title { font-size: 0.75rem; color: var(--text-muted); margin-left: 0.5rem; font-family: monospace; }
+        .terminal-body { padding: 1rem; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8125rem; background: var(--terminal-bg); }
+        .terminal-body > div { margin-bottom: 0.75rem; }
+        .cmd { display: flex; align-items: flex-start; gap: 0.5rem; }
+        .cmd-prompt { color: var(--green); }
+        .cmd-text { color: var(--text); }
+        .output { padding-left: 1rem; border-left: 2px solid; }
+        .output-error { border-color: rgba(239,68,68,0.3); }
+        .output-success { border-color: rgba(34,197,94,0.3); }
+        .output .label { font-size: 0.75rem; color: var(--yellow); }
+        .output .error { font-size: 0.75rem; color: var(--red); }
+        .output .dim { font-size: 0.75rem; color: var(--text-muted); }
+        .output .success { font-size: 0.75rem; color: var(--green); display: flex; align-items: center; gap: 0.5rem; }
+        .cursor-line { display: flex; align-items: center; gap: 0.5rem; padding-top: 0.25rem; }
+        .cursor {
+            width: 8px; height: 16px; background: var(--primary);
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* ── Features ── */
+        .features { padding: 6rem 1rem; }
+        .features-header { text-align: center; margin-bottom: 4rem; }
+        .features-header h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem; }
+        .features-header p { color: var(--text-muted); font-size: 1.125rem; max-width: 640px; margin: 0 auto; }
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem; max-width: 1200px; margin: 0 auto;
+        }
+        .feature-card {
+            padding: 1.5rem; border-radius: 12px; background: var(--bg-card);
+            border: 1px solid var(--border); transition: border-color 0.3s;
+        }
+        .feature-card:hover { border-color: rgba(99,102,241,0.3); }
+        .feature-icon {
+            width: 48px; height: 48px; border-radius: 8px;
+            background: rgba(99,102,241,0.1); display: flex;
+            align-items: center; justify-content: center; margin-bottom: 1rem;
+        }
+        .feature-icon svg { width: 24px; height: 24px; color: var(--primary); }
+        .feature-card h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .feature-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* ── CTA ── */
+        .cta { padding: 6rem 1rem; text-align: center; position: relative; }
+        .cta-glow {
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, transparent, rgba(99,102,241,0.05), transparent);
+        }
+        .cta-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
+        .cta h2 { font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1.5rem; }
+        .cta p { font-size: 1.125rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+
+        /* ── Footer ── */
+        .footer { border-top: 1px solid rgba(30,30,34,0.5); background: rgba(17,17,19,0.5); }
+        .footer-inner { max-width: 1200px; margin: 0 auto; padding: 3rem 1rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+        .footer-brand p { font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem; max-width: 300px; }
+        .footer h4 { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 1rem; }
+        .footer ul { list-style: none; }
+        .footer li { margin-bottom: 0.75rem; }
+        .footer li a { font-size: 0.875rem; color: rgba(250,250,250,0.8); transition: color 0.2s; }
+        .footer li a:hover { color: var(--primary); }
+        .footer-bottom {
+            margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(30,30,34,0.5);
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+        }
+        .footer-bottom p, .footer-bottom a { font-size: 0.875rem; color: var(--text-muted); }
+        .footer-bottom a:hover { color: var(--yellow); }
+        .bug-link { display: inline-flex; align-items: center; gap: 0.375rem; }
+        .bug-link svg { width: 14px; height: 14px; }
+
+        /* ── Animations ── */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; opacity: 0; }
+        .delay-1 { animation-delay: 100ms; }
+        .delay-2 { animation-delay: 200ms; }
+        .delay-3 { animation-delay: 300ms; }
+        .delay-4 { animation-delay: 400ms; }
+
+        /* ── Mobile ── */
+        @media (max-width: 640px) {
+            .hero-ctas { flex-direction: column; align-items: center; }
+            .btn-xl { width: 100%; justify-content: center; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m7 15 3-3-3-3M13 15h4"/></svg>
+                </div>
+                <span class="logo-text">DevOps<span>CTF</span></span>
+            </a>
+            <a href="#" id="nav-cta">
+                <button class="btn btn-hero">Start Solving</button>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <div class="badge fade-in">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m7 15 3-3-3-3M13 15h4"/></svg>
+                <span>Real Infrastructure. Real Challenges.</span>
+            </div>
+
+            <h1 class="fade-in delay-1">
+                Hands-on DevOps <span class="gradient-text">CTF</span><br>
+                <span style="color: var(--text-muted)">&amp;</span> Incident Simulation
+            </h1>
+
+            <p class="hero-sub fade-in delay-2">
+                Debug Kubernetes clusters, Fix Cloud deployments, and Solve
+                Real-world Infrastructure issues in isolated environments.
+            </p>
+
+            <div class="hero-ctas fade-in delay-3">
+                <a href="#"><button class="btn btn-hero btn-xl">Start Solving Challenges <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></a>
+                <a href="#"><button class="btn btn-outline btn-xl">Browse Challenges</button></a>
+            </div>
+
+            <!-- Terminal Preview -->
+            <div class="terminal fade-in delay-4">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="dot dot-red"></div>
+                            <div class="dot dot-yellow"></div>
+                            <div class="dot dot-green"></div>
+                        </div>
+                        <span class="terminal-title">k8s-debug-session</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div>
+                            <div class="cmd">
+                                <span class="cmd-prompt">$</span>
+                                <span class="cmd-text">kubectl describe pod api-server -n prod</span>
+                            </div>
+                        </div>
+                        <div class="output output-error">
+                            <div class="label">Events:</div>
+                            <div class="error">&#10007; Error: OOMKilled - Container exceeded memory limit (256Mi)</div>
+                            <div class="dim">Last State: Terminated with exit code 137</div>
+                        </div>
+                        <div>
+                            <div class="cmd">
+                                <span class="cmd-prompt">$</span>
+                                <span class="cmd-text">kubectl patch deploy api-server -p '{"spec"}...'</span>
+                            </div>
+                        </div>
+                        <div class="output output-success">
+                            <div class="success">&#10003; deployment.apps/api-server patched — memory: 512Mi</div>
+                        </div>
+                        <div class="cursor-line">
+                            <span class="cmd-prompt">$</span>
+                            <span style="color: var(--text-muted)">_</span>
+                            <span class="cursor"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="features-header">
+            <h2>Built for <span class="gradient-text">Real DevOps Engineers</span></h2>
+            <p>No Theory. No multiple choice. Real infrastructure, Real problems, Real debugging skills.</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m7 15 3-3-3-3M13 15h4"/></svg>
+                </div>
+                <h3>Real Terminal Access</h3>
+                <p>Full shell access to isolated environments. Debug as you would in production.</p>
+            </div>
+            <div class="feature-card fade-in delay-1">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12.5V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h7.5"/><path d="m18 14 4 4-4 4"/><path d="m14 18 4 4"/></svg>
+                </div>
+                <h3>Kubernetes Clusters</h3>
+                <p>Practice on real K8s clusters. Fix deployments, debug pods, configure networking.</p>
+            </div>
+            <div class="feature-card fade-in delay-2">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+                </div>
+                <h3>Cloud Infrastructure</h3>
+                <p>AWS, GCP, and Azure scenarios. IAM issues, networking, and service configuration.</p>
+            </div>
+            <div class="feature-card fade-in delay-3">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
+                </div>
+                <h3>CI/CD Pipelines</h3>
+                <p>Debug broken pipelines. Fix GitHub Actions, GitLab CI, and Jenkins configurations.</p>
+            </div>
+            <div class="feature-card fade-in delay-4">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <h3>Terraform & IaC</h3>
+                <p>Infrastructure as Code challenges. State management, drift detection, and more.</p>
+            </div>
+            <div class="feature-card fade-in">
+                <div class="feature-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <h3>Instant Environments</h3>
+                <p>Each challenge spins up in seconds. Fresh, isolated environments every time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="cta-glow"></div>
+        <div class="cta-content">
+            <h2>Ready to level up your <span class="gradient-text">DevOps skills</span>?</h2>
+            <p>Join thousands of engineers who practice real infrastructure debugging every day. Start with beginner challenges and work your way up.</p>
+            <a href="#"><button class="btn btn-hero btn-xl">Start Your First Challenge <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button></a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">
+                        <div class="logo-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m7 15 3-3-3-3M13 15h4"/></svg>
+                        </div>
+                        <span class="logo-text">DevOps<span>CTF</span></span>
+                    </a>
+                    <p>Master DevOps through hands-on infrastructure challenges. Debug real issues in isolated environments.</p>
+                </div>
+                <div>
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#">Challenges</a></li>
+                        <li><a href="#">Leaderboard</a></li>
+                        <li><a href="#">Profile</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Feedback</h4>
+                    <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:1rem;">Found a bug or have a suggestion? Let us know.</p>
+                    <a href="https://forms.gle/AHoVNfqgGyBPUMoX8" target="_blank" rel="noopener noreferrer">
+                        <button class="btn btn-outline btn-sm" style="color:var(--yellow);border-color:rgba(234,179,8,0.3);">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="m8 2 1.88 1.88M14.12 3.88 16 2M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg>
+                            Report Bug / Feedback
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 DevOpsCTF</p>
+                <a href="https://forms.gle/AHoVNfqgGyBPUMoX8" target="_blank" rel="noopener noreferrer" class="bug-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88M14.12 3.88 16 2M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/></svg>
+                    Report an issue
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Intersection Observer for scroll animations -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
