@@ -44,7 +44,7 @@
       <feMerge><feMergeNode in="glow"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <clipPath id="shieldClip">
-      <path d="M160 58 L80 90 L80 210 Q80 280 160 310 Q240 280 240 210 L240 90 Z"/>
+      <path d="M700 58 L620 90 L620 210 Q620 280 700 310 Q780 280 780 210 L780 90 Z"/>
     </clipPath>
   </defs>
 
@@ -61,87 +61,85 @@
     <line x1="1188" y1="0" x2="1188" y2="396" stroke="#06b6d4" stroke-width="1"/>
   </g>
 
-  <!-- Radial glow behind shield -->
-  <circle cx="160" cy="190" r="180" fill="#06b6d4" opacity="0.04"/>
+  <!-- Left side decorative elements (profile photo area) -->
+  <g opacity="0.06">
+    <circle cx="150" cy="120" r="80" stroke="#06b6d4" stroke-width="1" fill="none"/>
+    <circle cx="150" cy="120" r="50" stroke="#22c55e" stroke-width="0.5" fill="none"/>
+    <circle cx="80" cy="300" r="60" stroke="#06b6d4" stroke-width="0.5" fill="none"/>
+  </g>
+  <line x1="120" y1="50" x2="120" y2="346" stroke="url(#glowVert)" stroke-width="0.5" opacity="0.06"/>
+  <line x1="240" y1="30" x2="240" y2="366" stroke="url(#glowVert)" stroke-width="0.5" opacity="0.04"/>
+  <line x1="360" y1="50" x2="360" y2="346" stroke="url(#glowVert)" stroke-width="0.5" opacity="0.03"/>
 
-  <!-- Shield -->
-  <path d="M160 58 L80 90 L80 210 Q80 280 160 310 Q240 280 240 210 L240 90 Z"
+  <!-- Radial glow behind shield -->
+  <circle cx="700" cy="190" r="180" fill="#06b6d4" opacity="0.04"/>
+
+  <!-- Shield — shifted to center-right -->
+  <path d="M700 58 L620 90 L620 210 Q620 280 700 310 Q780 280 780 210 L780 90 Z"
         fill="url(#shieldFill)" stroke="url(#glow)" stroke-width="3.5" stroke-linejoin="round" filter="url(#outerGlow)"/>
 
   <!-- Circuit grid inside shield -->
   <g clip-path="url(#shieldClip)" opacity="0.06">
-    <line x1="80" y1="130" x2="240" y2="130" stroke="#06b6d4" stroke-width="1"/>
-    <line x1="80" y1="170" x2="240" y2="170" stroke="#06b6d4" stroke-width="1"/>
-    <line x1="80" y1="210" x2="240" y2="210" stroke="#06b6d4" stroke-width="1"/>
-    <line x1="80" y1="250" x2="240" y2="250" stroke="#06b6d4" stroke-width="1"/>
-    <line x1="120" y1="58" x2="120" y2="310" stroke="#06b6d4" stroke-width="1"/>
-    <line x1="160" y1="58" x2="160" y2="310" stroke="#06b6d4" stroke-width="1"/>
-    <line x1="200" y1="58" x2="200" y2="310" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="620" y1="130" x2="780" y2="130" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="620" y1="170" x2="780" y2="170" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="620" y1="210" x2="780" y2="210" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="620" y1="250" x2="780" y2="250" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="660" y1="58" x2="660" y2="310" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="700" y1="58" x2="700" y2="310" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="740" y1="58" x2="740" y2="310" stroke="#06b6d4" stroke-width="1"/>
   </g>
 
   <!-- Inner shield -->
-  <path d="M160 72 L94 100 L94 206 Q94 270 160 296 Q226 270 226 206 L226 100 Z"
+  <path d="M700 72 L634 100 L634 206 Q634 270 700 296 Q766 270 766 206 L766 100 Z"
         fill="none" stroke="url(#glow)" stroke-width="1" stroke-linejoin="round" opacity="0.2"/>
 
   <!-- Corner nodes -->
-  <circle cx="94" cy="100" r="2" fill="url(#glow)" opacity="0.3"/>
-  <circle cx="226" cy="100" r="2" fill="url(#glow)" opacity="0.3"/>
-  <circle cx="160" cy="72" r="2" fill="url(#glow)" opacity="0.3"/>
+  <circle cx="634" cy="100" r="2" fill="url(#glow)" opacity="0.3"/>
+  <circle cx="766" cy="100" r="2" fill="url(#glow)" opacity="0.3"/>
+  <circle cx="700" cy="72" r="2" fill="url(#glow)" opacity="0.3"/>
 
   <!-- Terminal >_ -->
   <g filter="url(#neon)">
-    <path d="M118 155 L148 178 L118 201" stroke="#22c55e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    <rect x="158" y="195" width="34" height="6" rx="3" fill="#22c55e"/>
+    <path d="M658 155 L688 178 L658 201" stroke="#22c55e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <rect x="698" y="195" width="34" height="6" rx="3" fill="#22c55e"/>
   </g>
 
   <!-- Flag -->
   <g filter="url(#flagGlow)">
-    <rect x="158" y="34" width="3.5" height="48" rx="1.75" fill="url(#flagBody)"/>
-    <path d="M161.5 38 C172 33 182 42 192 36 L192 58 C182 64 172 55 161.5 60 Z" fill="url(#flagBody)" opacity="0.85"/>
-    <path d="M170 43 C175 40 180 45 186 42 L186 54 C180 57 175 52 170 55 Z" fill="#0f172a" opacity="0.2"/>
+    <rect x="698" y="34" width="3.5" height="48" rx="1.75" fill="url(#flagBody)"/>
+    <path d="M701.5 38 C712 33 722 42 732 36 L732 58 C722 64 712 55 701.5 60 Z" fill="url(#flagBody)" opacity="0.85"/>
+    <path d="M710 43 C715 40 720 45 726 42 L726 54 C720 57 715 52 710 55 Z" fill="#0f172a" opacity="0.2"/>
   </g>
 
   <!-- "DevOps" text -->
-  <text x="310" y="195" font-family="'Inter', 'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-weight="800" font-size="96" letter-spacing="-3" fill="#e2e8f0" filter="url(#textGlow)">Dev<tspan fill="url(#glow)">Ops</tspan></text>
+  <text x="840" y="195" font-family="'Inter', 'SF Pro Display', 'Segoe UI', system-ui, sans-serif" font-weight="800" font-size="96" letter-spacing="-3" fill="#e2e8f0" filter="url(#textGlow)">Dev<tspan fill="url(#glow)">Ops</tspan></text>
 
   <!-- "CTF" text -->
-  <text x="720" y="195" font-family="'JetBrains Mono', 'SF Mono', 'Fira Code', monospace" font-weight="700" font-size="88" letter-spacing="4" fill="url(#glow)" filter="url(#neon)">CTF</text>
+  <text x="1250" y="195" font-family="'JetBrains Mono', 'SF Mono', 'Fira Code', monospace" font-weight="700" font-size="88" letter-spacing="4" fill="url(#glow)" filter="url(#neon)">CTF</text>
 
   <!-- Separator dot -->
-  <circle cx="706" cy="172" r="5" fill="url(#glow)" opacity="0.4"/>
+  <circle cx="1236" cy="172" r="5" fill="url(#glow)" opacity="0.4"/>
 
   <!-- Tagline -->
-  <text x="310" y="240" font-family="'Inter', 'SF Pro Display', system-ui, sans-serif" font-weight="400" font-size="22" letter-spacing="1" fill="#94a3b8">Train like it's production. Learn like it's a game.</text>
+  <text x="840" y="240" font-family="'Inter', 'SF Pro Display', system-ui, sans-serif" font-weight="400" font-size="22" letter-spacing="1" fill="#94a3b8">Train like it's production. Learn like it's a game.</text>
 
   <!-- Stats bar at bottom -->
   <g>
-    <rect x="310" y="280" width="700" height="1" fill="url(#glow)" opacity="0.15"/>
-    <text x="310" y="310" font-family="'JetBrains Mono', monospace" font-weight="600" font-size="16" fill="url(#glow)">150+</text>
-    <text x="370" y="310" font-family="'Inter', system-ui, sans-serif" font-weight="400" font-size="14" fill="#64748b">Challenges</text>
+    <rect x="840" y="280" width="700" height="1" fill="url(#glow)" opacity="0.15"/>
+    <text x="840" y="310" font-family="'JetBrains Mono', monospace" font-weight="600" font-size="16" fill="url(#glow)">150+</text>
+    <text x="900" y="310" font-family="'Inter', system-ui, sans-serif" font-weight="400" font-size="14" fill="#64748b">Challenges</text>
 
-    <circle cx="490" cy="306" r="2" fill="#64748b" opacity="0.4"/>
+    <circle cx="1020" cy="306" r="2" fill="#64748b" opacity="0.4"/>
 
-    <text x="520" y="310" font-family="'JetBrains Mono', monospace" font-weight="600" font-size="16" fill="url(#glow)">10</text>
-    <text x="550" y="310" font-family="'Inter', system-ui, sans-serif" font-weight="400" font-size="14" fill="#64748b">Categories</text>
+    <text x="1050" y="310" font-family="'JetBrains Mono', monospace" font-weight="600" font-size="16" fill="url(#glow)">10</text>
+    <text x="1080" y="310" font-family="'Inter', system-ui, sans-serif" font-weight="400" font-size="14" fill="#64748b">Categories</text>
 
-    <circle cx="668" cy="306" r="2" fill="#64748b" opacity="0.4"/>
+    <circle cx="1198" cy="306" r="2" fill="#64748b" opacity="0.4"/>
 
-    <text x="698" y="310" font-family="'JetBrains Mono', monospace" font-weight="600" font-size="16" fill="url(#glow)">&lt;10s</text>
-    <text x="748" y="310" font-family="'Inter', system-ui, sans-serif" font-weight="400" font-size="14" fill="#64748b">Spin-up</text>
+    <text x="1228" y="310" font-family="'JetBrains Mono', monospace" font-weight="600" font-size="16" fill="url(#glow)">&lt;10s</text>
+    <text x="1278" y="310" font-family="'Inter', system-ui, sans-serif" font-weight="400" font-size="14" fill="#64748b">Spin-up</text>
   </g>
 
-  <!-- Right side decorative elements -->
-  <g opacity="0.06">
-    <circle cx="1350" cy="120" r="80" stroke="#06b6d4" stroke-width="1" fill="none"/>
-    <circle cx="1350" cy="120" r="50" stroke="#22c55e" stroke-width="0.5" fill="none"/>
-    <circle cx="1450" cy="280" r="60" stroke="#06b6d4" stroke-width="0.5" fill="none"/>
-  </g>
-
-  <!-- Accent lines right side -->
-  <line x1="1250" y1="50" x2="1250" y2="346" stroke="url(#glowVert)" stroke-width="0.5" opacity="0.08"/>
-  <line x1="1350" y1="30" x2="1350" y2="366" stroke="url(#glowVert)" stroke-width="0.5" opacity="0.05"/>
-  <line x1="1450" y1="50" x2="1450" y2="346" stroke="url(#glowVert)" stroke-width="0.5" opacity="0.03"/>
-
-  <!-- URL -->
-  <text x="1280" y="340" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="16" fill="#64748b" opacity="0.6">devops-ctf.com</text>
+  <!-- URL bottom left safe zone -->
+  <text x="480" y="370" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="16" fill="#64748b" opacity="0.5">devops-ctf.com</text>
 </svg>
