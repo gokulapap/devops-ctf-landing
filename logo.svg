@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300" fill="none">
+  <defs>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="50%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="glowVert" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="shieldFill" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.1"/>
+      <stop offset="60%" stop-color="#0f172a" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#22c55e" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="flagBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <filter id="neon" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="textGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="outerGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur"/>
+      <feFlood flood-color="#06b6d4" flood-opacity="0.25" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="flagGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+      <feFlood flood-color="#22c55e" flood-opacity="0.4" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="shieldClip">
+      <path d="M120 28 L24 64 L24 152 Q24 230 120 268 Q216 230 216 152 L216 64 Z"/>
+    </clipPath>
+  </defs>
+
+  <!-- Shield -->
+  <path d="M120 28 L24 64 L24 152 Q24 230 120 268 Q216 230 216 152 L216 64 Z"
+        fill="url(#shieldFill)" stroke="url(#glow)" stroke-width="4" stroke-linejoin="round" filter="url(#outerGlow)"/>
+
+  <!-- Circuit grid inside shield -->
+  <g clip-path="url(#shieldClip)" opacity="0.06">
+    <line x1="24" y1="100" x2="216" y2="100" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="24" y1="135" x2="216" y2="135" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="24" y1="170" x2="216" y2="170" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="24" y1="205" x2="216" y2="205" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="80" y1="28" x2="80" y2="268" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="120" y1="28" x2="120" y2="268" stroke="#06b6d4" stroke-width="1"/>
+    <line x1="160" y1="28" x2="160" y2="268" stroke="#06b6d4" stroke-width="1"/>
+  </g>
+
+  <!-- Inner shield -->
+  <path d="M120 44 L42 74 L42 148 Q42 220 120 254 Q198 220 198 148 L198 74 Z"
+        fill="none" stroke="url(#glow)" stroke-width="1" stroke-linejoin="round" opacity="0.2"/>
+
+  <!-- Corner nodes -->
+  <circle cx="42" cy="74" r="2.5" fill="url(#glow)" opacity="0.3"/>
+  <circle cx="198" cy="74" r="2.5" fill="url(#glow)" opacity="0.3"/>
+  <circle cx="120" cy="44" r="2.5" fill="url(#glow)" opacity="0.3"/>
+
+  <!-- Terminal >_ -->
+  <g filter="url(#neon)">
+    <path d="M68 118 L104 146 L68 174" stroke="#22c55e" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <rect x="116" y="168" width="42" height="7" rx="3.5" fill="#22c55e"/>
+  </g>
+
+  <!-- Flag at shield peak -->
+  <g filter="url(#flagGlow)">
+    <rect x="118" y="4" width="4" height="54" rx="2" fill="url(#flagBody)"/>
+    <path d="M122 8 C134 2 146 12 158 6 L158 30 C146 36 134 26 122 32 Z" fill="url(#flagBody)" opacity="0.85"/>
+    <path d="M132 14 C138 11 144 16 150 13 L150 26 C144 29 138 24 132 27 Z" fill="#0f172a" opacity="0.2"/>
+  </g>
+
+  <!-- Bottom dots -->
+  <circle cx="100" cy="236" r="1.5" fill="url(#glow)" opacity="0.2"/>
+  <circle cx="120" cy="242" r="1.5" fill="url(#glow)" opacity="0.15"/>
+  <circle cx="140" cy="236" r="1.5" fill="url(#glow)" opacity="0.2"/>
+
+  <!-- Vertical separator -->
+  <rect x="244" y="80" width="2" height="140" rx="1" fill="url(#glowVert)" opacity="0.15"/>
+
+  <!-- "DevOps" -->
+  <text x="272" y="152" font-family="'Inter', 'SF Pro Display', 'Segoe UI', system-ui, -apple-system, sans-serif" font-weight="800" font-size="76" letter-spacing="-2" fill="#e2e8f0" filter="url(#textGlow)">Dev<tspan fill="url(#glow)">Ops</tspan></text>
+
+  <!-- Separator line under DevOps -->
+  <rect x="274" y="166" width="140" height="1.5" rx="0.75" fill="url(#glow)" opacity="0.2"/>
+
+  <!-- "CTF" -->
+  <text x="274" y="222" font-family="'JetBrains Mono', 'SF Mono', 'Fira Code', monospace" font-weight="700" font-size="56" letter-spacing="3" fill="url(#glow)" filter="url(#neon)">CTF</text>
+</svg>
