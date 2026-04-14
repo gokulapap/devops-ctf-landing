@@ -19,14 +19,14 @@
       <stop offset="100%" stop-color="#06b6d4"/>
     </linearGradient>
     <filter id="neon" x="-25%" y="-25%" width="150%" height="150%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
     <filter id="outerGlow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="10" result="blur"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
       <feFlood flood-color="#06b6d4" flood-opacity="0.25" result="color"/>
       <feComposite in="color" in2="blur" operator="in" result="glow"/>
       <feMerge>
@@ -35,7 +35,7 @@
       </feMerge>
     </filter>
     <filter id="flagGlow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
       <feFlood flood-color="#22c55e" flood-opacity="0.4" result="color"/>
       <feComposite in="color" in2="blur" operator="in" result="glow"/>
       <feMerge>
