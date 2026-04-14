@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevOps CTF — Hands-on DevOps CTF & Incident Simulation</title>
-    <meta name="description" content="Debug Kubernetes clusters, Fix Cloud deployments, and Solve Real-world Infrastructure issues in isolated environments.">
-    <meta property="og:title" content="DevOps CTF — Hands-on DevOps CTF & Incident Simulation">
-    <meta property="og:description" content="Real Infrastructure. Real Challenges. Debug Kubernetes, fix deployments, solve infra issues.">
+    <meta name="description" content="DevOpsCTF is a SaaS platform for hands-on DevOps training. Debug Kubernetes clusters, fix cloud deployments, and solve real-world infrastructure issues in isolated sandbox environments.">
+    <meta property="og:title" content="DevOpsCTF — Hands-on DevOps Training & Incident Simulation Platform">
+    <meta property="og:description" content="SaaS platform for hands-on DevOps training. Debug Kubernetes, fix deployments, solve real infra issues in isolated environments.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314b8a6' stroke-width='2'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='m7 15 3-3-3-3M13 15h4'/%3E%3C/svg%3E">
@@ -118,12 +118,59 @@
         .feature-card h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
         .feature-card p { font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6; }
 
+        /* ── How It Works ── */
+        .how-it-works { padding: 6rem 1rem; }
+        .how-it-works-header { text-align: center; margin-bottom: 4rem; }
+        .how-it-works-header h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem; }
+        .how-it-works-header p { color: hsl(var(--muted-foreground)); font-size: 1.125rem; max-width: 640px; margin: 0 auto; }
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+        .step-card { text-align: center; padding: 2rem 1.5rem; }
+        .step-number { width: 48px; height: 48px; border-radius: 50%; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; font-weight: 700; font-size: 1.25rem; color: hsl(var(--primary-foreground)); }
+        .step-card h3 { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .step-card p { font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6; }
+
+        /* ── About / Business ── */
+        .about { padding: 6rem 1rem; }
+        .about-inner { max-width: 900px; margin: 0 auto; }
+        .about-header { text-align: center; margin-bottom: 3rem; }
+        .about-header h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem; }
+        .about-text { font-size: 1.0625rem; color: hsl(var(--muted-foreground)); line-height: 1.8; margin-bottom: 1.5rem; }
+        .about-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+        .highlight-card { padding: 1.25rem; border-radius: 12px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); text-align: center; }
+        .highlight-card .number { font-size: 2rem; font-weight: 700; background-image: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .highlight-card .label { font-size: 0.875rem; color: hsl(var(--muted-foreground)); margin-top: 0.25rem; }
+
+        /* ── Team ── */
+        .team { padding: 6rem 1rem; }
+        .team-header { text-align: center; margin-bottom: 3rem; }
+        .team-header h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1rem; }
+        .team-header p { color: hsl(var(--muted-foreground)); font-size: 1.125rem; max-width: 640px; margin: 0 auto; }
+        .team-grid { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+        .team-card { padding: 2rem; border-radius: 12px; background: hsl(var(--card)); border: 1px solid hsl(var(--border)); box-shadow: var(--shadow-card); text-align: center; max-width: 320px; width: 100%; transition: box-shadow 0.3s ease, transform 0.3s ease; }
+        .team-card:hover { box-shadow: var(--shadow-glow); transform: translateY(-2px); }
+        .team-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--gradient-primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem; font-weight: 700; color: hsl(var(--primary-foreground)); }
+        .team-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.25rem; }
+        .team-card .role { font-size: 0.875rem; color: hsl(var(--primary)); margin-bottom: 0.75rem; }
+        .team-card .bio { font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.6; margin-bottom: 1rem; }
+        .team-social { display: flex; justify-content: center; gap: 0.75rem; }
+        .team-social a { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.8125rem; color: hsl(var(--muted-foreground)); padding: 0.375rem 0.75rem; border-radius: 6px; border: 1px solid hsl(var(--border)); transition: all 0.2s; }
+        .team-social a:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) / 0.5); background: hsl(var(--primary) / 0.05); }
+        .team-social a svg { width: 14px; height: 14px; }
+
         /* ── CTA (matches CTASection.tsx) ── */
         .cta { padding: 6rem 1rem; text-align: center; position: relative; overflow: hidden; }
         .cta-glow { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, hsl(var(--primary) / 0.05), transparent); }
         .cta-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
         .cta h2 { font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 700; margin-bottom: 1.5rem; line-height: 1.2; }
         .cta p { font-size: 1.125rem; color: hsl(var(--muted-foreground)); margin-bottom: 2.5rem; }
+
+        /* ── Nav links ── */
+        .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-links a { font-size: 0.875rem; color: hsl(var(--muted-foreground)); transition: color 0.2s; }
+        .nav-links a:hover { color: hsl(var(--primary)); }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
 
         /* ── Footer (matches Footer.tsx) ── */
         .footer { border-top: 1px solid hsl(var(--border) / 0.5); background: hsl(var(--card) / 0.5); }
@@ -167,6 +214,11 @@
                 <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m7 15 3-3-3-3M13 15h4"/></svg></div>
                 <span class="logo-text">DevOps<span>CTF</span></span>
             </a>
+            <div class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#about">About</a>
+                <a href="#team">Team</a>
+            </div>
             <a href="https://ctf.devops-ctf.com/dashboard"><button class="btn btn-hero">Start Solving</button></a>
         </div>
     </nav>
@@ -247,6 +299,100 @@
         </div>
     </section>
 
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="how-it-works-header">
+                <h2>How <span class="gradient-text">DevOpsCTF</span> Works</h2>
+                <p>Get started in minutes. No setup required — everything runs in the cloud.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-card fade-in">
+                    <div class="step-number">1</div>
+                    <h3>Pick a Challenge</h3>
+                    <p>Browse challenges across Kubernetes, CI/CD, Cloud Infrastructure, Terraform, and more. Filter by difficulty level.</p>
+                </div>
+                <div class="step-card fade-in delay-1">
+                    <div class="step-number">2</div>
+                    <h3>Launch Environment</h3>
+                    <p>Each challenge spins up a fresh, isolated sandbox environment in seconds. Real infrastructure, not simulations.</p>
+                </div>
+                <div class="step-card fade-in delay-2">
+                    <div class="step-number">3</div>
+                    <h3>Debug & Fix</h3>
+                    <p>Use a real terminal to diagnose issues, apply fixes, and validate your solution — just like on-call debugging.</p>
+                </div>
+                <div class="step-card fade-in delay-3">
+                    <div class="step-number">4</div>
+                    <h3>Capture the Flag</h3>
+                    <p>Submit the flag to prove your fix worked. Earn points, climb the leaderboard, and track your progress.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-inner">
+                <div class="about-header">
+                    <h2>About <span class="gradient-text">DevOpsCTF</span></h2>
+                </div>
+                <p class="about-text">
+                    DevOpsCTF is a digital-native SaaS platform that provides hands-on DevOps training through Capture The Flag (CTF) challenges. We address a critical gap in the DevOps education market: most training is theory-heavy with multiple-choice tests, while real-world DevOps demands practical debugging and troubleshooting skills.
+                </p>
+                <p class="about-text">
+                    Our platform provisions isolated, ephemeral cloud environments on demand — including real Kubernetes clusters, shell terminals, and infrastructure simulators — so engineers can practice diagnosing and fixing production-grade incidents safely. Each challenge is modeled after real-world outages and infrastructure failures that DevOps engineers encounter daily.
+                </p>
+                <p class="about-text">
+                    DevOpsCTF serves individual engineers looking to sharpen their skills, teams preparing for on-call rotations, and organizations that want to benchmark and upskill their DevOps talent. Our SaaS model delivers immediate value with zero setup — users sign in and start solving challenges within seconds.
+                </p>
+                <div class="about-highlights">
+                    <div class="highlight-card fade-in">
+                        <div class="number">13+</div>
+                        <div class="label">Hands-on Challenges</div>
+                    </div>
+                    <div class="highlight-card fade-in delay-1">
+                        <div class="number">5</div>
+                        <div class="label">Challenge Categories</div>
+                    </div>
+                    <div class="highlight-card fade-in delay-2">
+                        <div class="number">&lt;10s</div>
+                        <div class="label">Environment Spin-up</div>
+                    </div>
+                    <div class="highlight-card fade-in delay-3">
+                        <div class="number">100%</div>
+                        <div class="label">Cloud-Native SaaS</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="team" id="team">
+        <div class="container">
+            <div class="team-header">
+                <h2>Meet the <span class="gradient-text">Team</span></h2>
+                <p>Built by engineers who've been on-call and know what real debugging looks like.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card fade-in">
+                    <div class="team-avatar">G</div>
+                    <h3>Gokul AP</h3>
+                    <div class="role">Founder</div>
+                    <p class="bio">DevOps engineer and cloud infrastructure specialist. Built DevOpsCTF to bridge the gap between theoretical DevOps training and real-world incident response skills. Passionate about making production debugging an accessible, learnable skill.</p>
+                    <div class="team-social">
+                        <a href="https://linkedin.com/in/gokulap" target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA -->
     <section class="cta">
         <div class="cta-glow"></div>
@@ -273,26 +419,28 @@
                     <ul>
                         <li><a href="https://ctf.devops-ctf.com/dashboard">Challenges</a></li>
                         <li><a href="https://ctf.devops-ctf.com/leaderboard">Leaderboard</a></li>
-                        <li><a href="https://ctf.devops-ctf.com/profile">Profile</a></li>
+                        <li><a href="https://ctf.devops-ctf.com/paths">Learning Paths</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4>Feedback</h4>
-                    <p style="font-size:0.875rem;color:hsl(var(--muted-foreground));margin-bottom:1rem;">Found a bug or have a suggestion? Let us know.</p>
-                    <a href="https://forms.gle/AHoVNfqgGyBPUMoX8" target="_blank" rel="noopener noreferrer">
-                        <button class="btn btn-outline btn-sm bug-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="m8 2 1.88 1.88M14.12 3.88 16 2M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg>
-                            Report Bug / Feedback
-                        </button>
-                    </a>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#team">Team</a></li>
+                        <li><a href="mailto:gokul@devops-ctf.com">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://linkedin.com/in/gokulap" target="_blank" rel="noopener noreferrer">LinkedIn — Gokul AP</a></li>
+                        <li><a href="https://forms.gle/AHoVNfqgGyBPUMoX8" target="_blank" rel="noopener noreferrer">Report Bug / Feedback</a></li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="year">2025</span> DevOpsCTF</p>
-                <a href="https://forms.gle/AHoVNfqgGyBPUMoX8" target="_blank" rel="noopener noreferrer" class="bug-link">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88M14.12 3.88 16 2M9 7.13v-1a3.003 3.003 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6"/></svg>
-                    Report an issue
-                </a>
+                <p>&copy; <span id="year">2025</span> DevOpsCTF. All rights reserved.</p>
+                <a href="mailto:gokul@devops-ctf.com" style="font-size:0.875rem;color:hsl(var(--muted-foreground));">gokul@devops-ctf.com</a>
             </div>
         </div>
     </footer>
