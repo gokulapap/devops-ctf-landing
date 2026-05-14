@@ -42,6 +42,10 @@
             --shadow-card: 0 1px 0 0 hsl(0 0% 100% / 0.04), 0 2px 8px -4px hsl(225 43% 4% / 0.6);
             --glow-primary: 0 0 12px hsl(142 71% 45% / 0.35);
             --glow-secondary: 0 0 12px hsl(188 95% 43% / 0.35);
+            /* Third-party brand colors — RGB triplets so they compose with
+               rgba() and the existing --brand custom-prop pattern below. */
+            --brand-linkedin: 10, 102, 194;     /* #0a66c2 */
+            --brand-github:   139, 92, 246;     /* #8b5cf6 — vivid violet */
             --terminal-bg: 228 51% 7%;
             --terminal-border: 225 23% 19%;
             --terminal-green: 142 71% 45%;
@@ -54,6 +58,12 @@
            scroll the page so the section heading appears just BELOW the
            fixed 64px navbar (not behind it). 80px = navbar (64) + 16 air. */
         html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        /* Keyboard focus ring — primary-green 2px outline, only when focus
+           is keyboard-driven (Tab). Mouse clicks don't trigger this. */
+        :focus-visible { outline: 2px solid hsl(var(--primary) / 0.7); outline-offset: 2px; border-radius: var(--radius-btn); }
+        /* Nav links sit on a dark backdrop — bump their ring slightly so it
+           reads at a glance, and tint the link itself primary-green too. */
+        .nav-links a:focus-visible { outline-offset: 6px; color: hsl(var(--primary)); }
         body { font-family: 'Geist', 'Inter', system-ui, -apple-system, sans-serif; background: hsl(var(--background)); color: hsl(var(--foreground)); line-height: 1.6; -webkit-font-smoothing: antialiased; }
         ::selection { background: hsl(var(--tertiary) / 0.3); color: hsl(var(--foreground)); }
         a { color: inherit; text-decoration: none; }
@@ -152,6 +162,43 @@
         .cursor { width: 8px; height: 16px; background: hsl(var(--primary)); animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
 
+        /* ── Live terminal — typing effect + rotating pod status ──
+              Pure CSS, no JS. Reduce-motion users see the finished state. */
+        @keyframes term-type {
+            0% { width: 0; }
+            70%, 100% { width: 100%; }
+        }
+        .term-typing {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            vertical-align: bottom;
+            width: 0;
+            animation: term-type 1.6s steps(40, end) forwards;
+        }
+        .term-line-fade { opacity: 0; animation: term-fade 0.3s forwards; }
+        @keyframes term-fade { to { opacity: 1; } }
+        /* postgres row: stack 3 status spans in a single grid cell, each
+           starts at opacity 0 so before its delay window it's invisible
+           (instead of all three showing at once at t=0). */
+        .pod-cycle { display: inline-grid; grid-template-columns: 1fr; grid-template-rows: 1fr; }
+        .pod-cycle > * { grid-area: 1 / 1; opacity: 0; animation: pod-cycle 9s ease-in-out infinite; white-space: nowrap; }
+        .pod-cycle > *:nth-child(1) { animation-delay: 0s; }
+        .pod-cycle > *:nth-child(2) { animation-delay: 3s; }
+        .pod-cycle > *:nth-child(3) { animation-delay: 6s; }
+        @keyframes pod-cycle {
+            0%, 30%   { opacity: 1; }
+            33%, 100% { opacity: 0; }
+        }
+        .pip-creating { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: hsl(var(--secondary)); box-shadow: 0 0 8px hsl(var(--secondary) / 0.55); margin-right: 0.375rem; vertical-align: middle; }
+        .status-creating { color: hsl(var(--secondary)); }
+        @media (prefers-reduced-motion: reduce) {
+            .term-typing { width: 100%; animation: none; }
+            .term-line-fade { opacity: 1; animation: none; }
+            .pod-cycle > * { animation: none; opacity: 0; }
+            .pod-cycle > *:last-child { opacity: 1; }
+        }
+
         /* ── Features — ghost-border tonal cards ── */
         .features { padding: 6rem 1.5rem; }
         .features-header { text-align: center; margin-bottom: 4rem; }
@@ -215,8 +262,10 @@
         .team-social a { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; padding: 0.375rem 0.75rem; border-radius: var(--radius-btn); transition: all 0.2s; color: rgb(var(--brand)); border: 1px solid rgba(var(--brand), 0.5); background: rgba(var(--brand), 0.06); }
         .team-social a:hover { border-color: rgba(var(--brand), 0.8); background: rgba(var(--brand), 0.12); }
         .team-social a svg { width: 14px; height: 14px; }
-        .team-social .linkedin { --brand: 10, 102, 194; }   /* #0a66c2 */
-        .team-social .github   { --brand: 139, 92, 246; }   /* #8b5cf6 — vivid violet (dark purple family) */
+        /* Per-pill class only swaps the --brand pointer; the actual colour
+           values live as design tokens at the top of :root above. */
+        .team-social .linkedin { --brand: var(--brand-linkedin); }
+        .team-social .github   { --brand: var(--brand-github); }
 
         /* ── CTA (matches CTASection.tsx) ── */
         .cta { padding: 6rem 1rem; text-align: center; position: relative; overflow: hidden; }
@@ -384,14 +433,23 @@
                         <span></span>
                     </div>
                     <div class="terminal-body">
-                        <div class="cmd"><span class="cmd-prompt">$</span><span class="cmd-text">kubectl apply -f production-db.yaml</span></div>
-                        <div class="cmd-dim">deployment.apps/<b>postgres-db</b> created</div>
-                        <div class="cmd-dim">service/<b>postgres-svc</b> created</div>
-                        <div class="cmd"><span class="cmd-prompt">$</span><span class="cmd-text">kubectl get pods -w</span></div>
+                        <div class="cmd"><span class="cmd-prompt">$</span><span class="cmd-text term-typing" style="animation-delay:0.3s">kubectl apply -f production-db.yaml</span></div>
+                        <div class="cmd-dim term-line-fade" style="animation-delay:1.9s">deployment.apps/<b>postgres-db</b> created</div>
+                        <div class="cmd-dim term-line-fade" style="animation-delay:2.2s">service/<b>postgres-svc</b> created</div>
+                        <div class="cmd"><span class="cmd-prompt">$</span><span class="cmd-text term-typing" style="animation-delay:2.6s">kubectl get pods -w</span></div>
                         <table class="pods-table">
                             <thead><tr><th>NAME</th><th>READY</th><th>STATUS</th><th>AGE</th></tr></thead>
                             <tbody>
-                                <tr><td>postgres-db-7d4b…</td><td>0/1</td><td><span class="pip-pending"></span><span class="status-pending">Pending</span></td><td>0s</td></tr>
+                                <tr>
+                                    <td>postgres-db-7d4b…</td>
+                                    <td><span class="pod-cycle"><span>0/1</span><span>0/1</span><span>1/1</span></span></td>
+                                    <td><span class="pod-cycle">
+                                        <span><span class="pip-pending"></span><span class="status-pending">Pending</span></span>
+                                        <span><span class="pip-creating"></span><span class="status-creating">Creating</span></span>
+                                        <span><span class="pip-running"></span><span class="status-running">Running</span></span>
+                                    </span></td>
+                                    <td>0s</td>
+                                </tr>
                                 <tr><td>frontend-app-8x…</td><td>1/1</td><td><span class="pip-running"></span><span class="status-running">Running</span></td><td>2d</td></tr>
                                 <tr><td>redis-cache-4z2…</td><td>1/1</td><td><span class="pip-running"></span><span class="status-running">Running</span></td><td>12h</td></tr>
                             </tbody>
@@ -604,6 +662,7 @@
             entries.forEach(e => { if (e.isIntersecting) e.target.style.animationPlayState = 'running'; });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-in').forEach(el => { el.style.animationPlayState = 'paused'; observer.observe(el); });
+
     </script>
 </body>
 </html>
