@@ -200,11 +200,15 @@
         .team-card .role { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: hsl(var(--secondary)); margin-bottom: 0.75rem; }
         .team-card .bio { font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.55; margin-bottom: 1rem; }
         .team-social { display: flex; justify-content: center; gap: 0.5rem; }
-        /* LinkedIn-branded pill — brand blue #0a66c2 for outline + text + icon,
-           with a 6% wash inside. Reads "LinkedIn" before you read the label. */
-        .team-social a { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; padding: 0.375rem 0.75rem; border-radius: var(--radius-btn); transition: all 0.2s; color: #0a66c2; border: 1px solid rgba(10, 102, 194, 0.5); background: rgba(10, 102, 194, 0.06); }
-        .team-social a:hover { border-color: rgba(10, 102, 194, 0.8); background: rgba(10, 102, 194, 0.12); }
+        /* Social pills — both LinkedIn (brand blue) and GitHub (dark-mode
+           grey) use the same 100/50/6 % stop pattern for text/border/bg,
+           parameterised through CSS custom properties so the only diff
+           between buttons is the brand R/G/B triplet. */
+        .team-social a { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; padding: 0.375rem 0.75rem; border-radius: var(--radius-btn); transition: all 0.2s; color: rgb(var(--brand)); border: 1px solid rgba(var(--brand), 0.5); background: rgba(var(--brand), 0.06); }
+        .team-social a:hover { border-color: rgba(var(--brand), 0.8); background: rgba(var(--brand), 0.12); }
         .team-social a svg { width: 14px; height: 14px; }
+        .team-social .linkedin { --brand: 10, 102, 194; }   /* #0a66c2 */
+        .team-social .github   { --brand: 201, 209, 217; }  /* #c9d1d9 — github.com dark-mode fg */
 
         /* ── CTA (matches CTASection.tsx) ── */
         .cta { padding: 6rem 1rem; text-align: center; position: relative; overflow: hidden; }
@@ -262,9 +266,9 @@
             /* Hero — tighter rhythm */
             .hero-content { padding: calc(3rem + 64px) 1rem 4rem; gap: 2.5rem; }
             .badge span { font-size: 0.6875rem; }
-            /* Mobile clamp nudged up ~2% (1.875→1.91, 2.5→2.55rem) so the
-               headline has slightly more presence on phones. */
-            h1 { font-size: clamp(1.91rem, 8.16vw, 2.55rem); line-height: 1.1; }
+            /* Mobile clamp bumped a further ~4.5% (now +~6.7% total vs the
+               original 1.875/8/2.5rem) so the headline carries on phones. */
+            h1 { font-size: clamp(2rem, 8.5vw, 2.67rem); line-height: 1.1; }
             .hero-sub { font-size: 0.9375rem; line-height: 1.55; margin-bottom: 1.75rem; }
             .tech-chips { margin-top: 2.25rem; }
             .tech-chips li { font-size: 0.6875rem; padding: 0.1875rem 0.5rem; }
@@ -309,7 +313,7 @@
 
         /* ── Very narrow phones (320–375px) — extra defensive ── */
         @media (max-width: 380px) {
-            h1 { font-size: 1.785rem; } /* +2% on very narrow phones */
+            h1 { font-size: 1.865rem; } /* further bumped ~4.5% on very narrow phones */
             .badge { padding: 0.25rem 0.625rem; }
             .badge span { font-size: 0.625rem; }
             .terminal-body { font-size: 0.6875rem; padding: 0.75rem; }
@@ -518,9 +522,13 @@
                     <div class="role">Creator</div>
                     <p class="bio">DevOps engineer and Security Enthusiast. Built DevOpsCTF to bridge the gap between theoretical DevOps training and real-world incident response skills. Passionate about making production debugging an accessible, learnable skill.</p>
                     <div class="team-social">
-                        <a href="https://linkedin.com/in/gokulap" target="_blank" rel="noopener noreferrer">
+                        <a class="linkedin" href="https://linkedin.com/in/gokulap" target="_blank" rel="noopener noreferrer">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
                             LinkedIn
+                        </a>
+                        <a class="github" href="https://github.com/gokulapap" target="_blank" rel="noopener noreferrer">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.24 3.34.95.1-.74.4-1.24.73-1.53-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.47.11-3.06 0 0 .97-.31 3.18 1.18a11 11 0 015.78 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.77.11 3.06.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56 4.56-1.52 7.85-5.83 7.85-10.91C23.5 5.65 18.35.5 12 .5z"/></svg>
+                            GitHub
                         </a>
                     </div>
                 </div>
