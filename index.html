@@ -380,14 +380,14 @@
                 <div class="terminal-window">
                     <div class="terminal-header">
                         <div class="terminal-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
-                        <span class="terminal-title">kubectl@cluster-alpha-1</span>
+                        <span class="terminal-title">kubectl@debug-session</span>
                         <span></span>
                     </div>
                     <div class="terminal-body">
-                        <div class="cmd"><span class="cmd-prompt">→ ~</span><span class="cmd-text">kubectl apply -f production-db.yaml</span></div>
+                        <div class="cmd"><span class="cmd-prompt">$</span><span class="cmd-text">kubectl apply -f production-db.yaml</span></div>
                         <div class="cmd-dim">deployment.apps/<b>postgres-db</b> created</div>
                         <div class="cmd-dim">service/<b>postgres-svc</b> created</div>
-                        <div class="cmd"><span class="cmd-prompt">→ ~</span><span class="cmd-text">kubectl get pods -w</span></div>
+                        <div class="cmd"><span class="cmd-prompt">$</span><span class="cmd-text">kubectl get pods -w</span></div>
                         <table class="pods-table">
                             <thead><tr><th>NAME</th><th>READY</th><th>STATUS</th><th>AGE</th></tr></thead>
                             <tbody>
@@ -396,7 +396,7 @@
                                 <tr><td>redis-cache-4z2…</td><td>1/1</td><td><span class="pip-running"></span><span class="status-running">Running</span></td><td>12h</td></tr>
                             </tbody>
                         </table>
-                        <div class="cursor-line"><span class="cmd-prompt">→ ~</span><span class="cursor"></span></div>
+                        <div class="cursor-line"><span class="cmd-prompt">$</span><span class="cursor"></span></div>
                     </div>
                 </div>
             </div>
