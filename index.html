@@ -96,7 +96,9 @@
         .badge:hover { border-color: hsl(var(--secondary) / 0.7); }
         .badge .pip { width: 8px; height: 8px; border-radius: 50%; background: hsl(var(--primary)); box-shadow: 0 0 8px hsl(var(--primary) / 0.6); }
         .badge span { font-size: 0.75rem; font-weight: 500; }
-        h1 { font-size: clamp(2.5rem, 6vw, 4.25rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; margin-top: 1.5rem; margin-bottom: 1.5rem; }
+        /* Desktop clamp shaved ~2% on both ends (2.5→2.45, 4.25→4.17rem)
+           so the headline is a touch less heavy on big monitors. */
+        h1 { font-size: clamp(2.45rem, 5.88vw, 4.17rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; margin-top: 1.5rem; margin-bottom: 1.5rem; }
         h1 .amp { color: hsl(var(--muted-foreground)); }
         .hero-sub { font-size: 1.0625rem; color: hsl(var(--muted-foreground)); max-width: 540px; margin-bottom: 2.25rem; line-height: 1.65; }
         .hero-ctas { display: flex; gap: 0.75rem; flex-wrap: wrap; }
@@ -206,7 +208,11 @@
         .cta { padding: 6rem 1rem; text-align: center; position: relative; overflow: hidden; }
         .cta-glow { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent, hsl(var(--primary) / 0.05), transparent); }
         .cta-content { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; }
-        .cta h2 { font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 600; margin-bottom: 1.5rem; line-height: 1.1; letter-spacing: -0.01em; }
+        /* Line-height >=1.2 because background-clip: text on .gradient-text
+           clips at glyph bounds — tighter leading shaves the bottom of the
+           "s" in "skills" / the tail of the "?". */
+        .cta h2 { font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 600; margin-bottom: 1.5rem; line-height: 1.2; letter-spacing: -0.01em; padding-bottom: 0.25rem; }
+        .cta h2 .gradient-text { display: inline-block; padding-bottom: 0.125rem; }
         @media (min-width: 768px) { .cta h2 { white-space: nowrap; } }
         .cta p { font-size: 1.125rem; color: hsl(var(--muted-foreground)); margin-bottom: 2.5rem; }
 
@@ -254,7 +260,9 @@
             /* Hero — tighter rhythm */
             .hero-content { padding: calc(3rem + 64px) 1rem 4rem; gap: 2.5rem; }
             .badge span { font-size: 0.6875rem; }
-            h1 { font-size: clamp(1.875rem, 8vw, 2.5rem); line-height: 1.1; }
+            /* Mobile clamp nudged up ~2% (1.875→1.91, 2.5→2.55rem) so the
+               headline has slightly more presence on phones. */
+            h1 { font-size: clamp(1.91rem, 8.16vw, 2.55rem); line-height: 1.1; }
             .hero-sub { font-size: 0.9375rem; line-height: 1.55; margin-bottom: 1.75rem; }
             .tech-chips { margin-top: 2.25rem; }
             .tech-chips li { font-size: 0.6875rem; padding: 0.1875rem 0.5rem; }
@@ -299,7 +307,7 @@
 
         /* ── Very narrow phones (320–375px) — extra defensive ── */
         @media (max-width: 380px) {
-            h1 { font-size: 1.75rem; }
+            h1 { font-size: 1.785rem; } /* +2% on very narrow phones */
             .badge { padding: 0.25rem 0.625rem; }
             .badge span { font-size: 0.625rem; }
             .terminal-body { font-size: 0.6875rem; padding: 0.75rem; }
