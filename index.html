@@ -200,8 +200,10 @@
         .team-card .role { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: hsl(var(--secondary)); margin-bottom: 0.75rem; }
         .team-card .bio { font-size: 0.875rem; color: hsl(var(--muted-foreground)); line-height: 1.55; margin-bottom: 1rem; }
         .team-social { display: flex; justify-content: center; gap: 0.5rem; }
-        .team-social a { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; color: hsl(var(--muted-foreground)); padding: 0.375rem 0.75rem; border-radius: var(--radius-btn); border: 1px solid hsl(var(--border) / 0.1); transition: all 0.2s; }
-        .team-social a:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) / 0.4); background: hsl(var(--primary) / 0.05); }
+        /* LinkedIn-branded pill — brand blue #0a66c2 for outline + text + icon,
+           with a 6% wash inside. Reads "LinkedIn" before you read the label. */
+        .team-social a { display: inline-flex; align-items: center; gap: 0.375rem; font-size: 0.75rem; padding: 0.375rem 0.75rem; border-radius: var(--radius-btn); transition: all 0.2s; color: #0a66c2; border: 1px solid rgba(10, 102, 194, 0.5); background: rgba(10, 102, 194, 0.06); }
+        .team-social a:hover { border-color: rgba(10, 102, 194, 0.8); background: rgba(10, 102, 194, 0.12); }
         .team-social a svg { width: 14px; height: 14px; }
 
         /* ── CTA (matches CTASection.tsx) ── */
@@ -472,13 +474,13 @@
                     <h2>About <span class="gradient-text">DevOpsCTF</span></h2>
                 </div>
                 <p class="about-text">
-                    DevOpsCTF is a hands-on DevOps training platform built around Capture The Flag (CTF) challenges. We address a critical gap in the way engineers learn DevOps: most training is theory-heavy with multiple-choice tests, while real-world DevOps demands practical debugging and troubleshooting skills.
+                    DevOpsCTF is a hands-on DevOps training platform built around Capture The Flag challenges. Most DevOps training is theory-heavy with multiple-choice tests, while real-world DevOps demands practical debugging and troubleshooting.
                 </p>
                 <p class="about-text">
-                    Our platform provisions isolated, ephemeral cloud environments on demand — including real DevOps challenges, shell terminals, and interactive environments — so engineers can practice diagnosing and fixing production-grade incidents safely. Each challenge is modeled after real-world outages and infrastructure failures that DevOps engineers encounter daily.
+                    Our platform provisions isolated, ephemeral cloud environments on demand, so engineers can practice diagnosing and fixing production-grade incidents safely. Each challenge is modeled after real outages and infrastructure failures DevOps engineers encounter daily.
                 </p>
                 <p class="about-text">
-                    DevOpsCTF serves individual engineers looking to sharpen their skills, teams preparing for on-call rotations, and organizations that want to benchmark and upskill their DevOps talent. The platform delivers immediate value with zero setup — sign in and start solving challenges within seconds.
+                    DevOpsCTF serves individual engineers sharpening their skills, teams preparing for on-call, and organizations upskilling DevOps talent. Zero setup &mdash; sign in and start solving in seconds.
                 </p>
                 <div class="about-highlights">
                     <div class="highlight-card fade-in">
@@ -490,7 +492,7 @@
                         <div class="label">Challenge Categories</div>
                     </div>
                     <div class="highlight-card fade-in delay-2">
-                        <div class="number">&lt;10s</div>
+                        <div class="number">~10s</div>
                         <div class="label">Environment Spin-up</div>
                     </div>
                     <div class="highlight-card fade-in delay-3">
